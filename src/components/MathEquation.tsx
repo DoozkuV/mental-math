@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useReducer } from "react";
 import Timer from "@components/Timer";
 import { usePing } from "@hooks/usePing";
 
@@ -28,10 +28,6 @@ function MathEquation<T extends number[]>({
 
   const solution = solutionFunc(...operands);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  // Auto-focus input on load
-  useEffect(() => inputRef.current?.focus(), []);
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value);
     if (val !== solution) return;
@@ -60,8 +56,8 @@ function MathEquation<T extends number[]>({
 
         <input
           type="number"
-          ref={inputRef}
           onChange={onChange}
+          autoFocus
           className="w-40 md:w-56 h-20 text-center text-4xl font-bold border-4 border-indigo-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-600 transition"
         />
 

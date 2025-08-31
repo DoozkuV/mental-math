@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import MathInput from '@components/MathInput'
+import MathEquation from '@/components/MathEquation'
 import { randSingleDigit } from '@/lib/math'
 
 export const Route = createFileRoute('/_game/addition')({
@@ -7,10 +7,14 @@ export const Route = createFileRoute('/_game/addition')({
 })
 
 function FileRoute() {
-  const operandFunc = () =>
-    ({ lhs: randSingleDigit(), rhs: randSingleDigit() });
-
-  return <MathInput operandFunc={operandFunc} operator='add' />;
+  return (
+    <MathEquation
+      operandFunc={() => [randSingleDigit(), randSingleDigit()] as const}
+      solutionFunc={(lhs, rhs) => lhs + rhs}
+    >
+      {(lhs, rhs) => `${lhs} + ${rhs}`}
+    </MathEquation>
+  );
 }
 
 export default FileRoute

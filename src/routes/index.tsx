@@ -20,21 +20,28 @@ function RouteComponent() {
             to="/addition"
             className="w-full text-center py-4 text-xl font-bold text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition"
           >
-            ➕ Addition Practice
+            ➕ Addition
           </Link>
 
           <Link
             to="/subtraction"
             className="w-full text-center py-4 text-xl font-bold text-white bg-pink-500 rounded-lg shadow-md hover:bg-pink-600 transition"
           >
-            ➖ Subtraction Practice
+            ➖ Subtraction
           </Link>
 
           <Link
             to="/multiplication"
             className="w-full text-center py-4 text-xl font-bold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 transition"
           >
-            ✖️ Times Table Practice
+            ✖️ Times Table
+          </Link>
+
+          <Link
+            to="/power-of-two"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 transition"
+          >
+            💪 Power of 2
           </Link>
 
           <Link

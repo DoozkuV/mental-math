@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import MathInput from '@components/MathInput'
+import MathEquation from '@/components/MathEquation'
 import { randInt } from '@/lib/math'
 
 export const Route = createFileRoute('/_game/multiplication')({
@@ -7,10 +7,14 @@ export const Route = createFileRoute('/_game/multiplication')({
 })
 
 function FileRoute() {
-  const operandFunc = () =>
-    ({ lhs: randInt(1, 12), rhs: randInt(1, 12) });
-
-  return <MathInput operandFunc={operandFunc} operator='multiply' />;
+  return (
+    <MathEquation
+      operandFunc={() => [randInt(1, 12), randInt(1, 12)] as const}
+      solutionFunc={(lhs, rhs) => lhs * rhs}
+    >
+      {(lhs, rhs) => `${lhs} x ${rhs}`}
+    </MathEquation >
+  );
 }
 
 export default FileRoute

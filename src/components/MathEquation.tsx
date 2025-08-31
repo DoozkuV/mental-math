@@ -2,34 +2,31 @@ import React, { useEffect, useReducer, useRef } from "react";
 import Timer from "@components/Timer";
 import { usePing } from "@hooks/usePing";
 
-export interface MathInputProps {
-  operandFunc: () => { lhs: number, rhs: number },
-  operator: "add" | "subtract" | "multiply" | "divide";
+export interface MathEquationProps<T extends number[]> {
+  operandFunc: () => T;
+  solutionFunc: (...operands: T) => number;
+  children: (...operands: T) => React.ReactNode;
 }
 
-type State = { lhs: number; rhs: number; numSolved: number };
+type State<T extends number[]> = { operands: T; numSolved: number };
 
-const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
+function MathEquation<T extends number[]>({
+  operandFunc,
+  solutionFunc,
+  children: equationFormat
+}: MathEquationProps<T>) {
   const { pings, triggerPing } = usePing();
 
-  const reducer = ({ numSolved }: State): State => ({
+  const reducer = ({ numSolved }: State<T>): State<T> => ({
     numSolved: numSolved + 1,
-    ...operandFunc()
+    operands: operandFunc()
   });
-  const [{ lhs, rhs, numSolved }, dispatch] = useReducer(reducer, {
+  const [{ operands, numSolved }, dispatch] = useReducer(reducer, {
     numSolved: 0,
-    ...operandFunc(),
+    operands: operandFunc(),
   });
 
-  const operators = {
-    add: { fn: (a: number, b: number) => a + b, symbol: '+' },
-    subtract: { fn: (a: number, b: number) => a - b, symbol: '-' },
-    multiply: { fn: (a: number, b: number) => a * b, symbol: 'x' },
-    divide: { fn: (a: number, b: number) => a / b, symbol: '÷' },
-  };
-
-  const { fn, symbol } = operators[operator];
-  const res = fn(lhs, rhs);
+  const solution = solutionFunc(...operands);
 
   const inputRef = useRef<HTMLInputElement>(null);
   // Auto-focus input on load
@@ -37,7 +34,7 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value);
-    if (val !== res) return;
+    if (val !== solution) return;
 
     e.target.value = "";
     dispatch();
@@ -58,7 +55,7 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
       {/* Main Game Screen */}
       <div className="relative z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md shadow-2xl rounded-xl p-10 gap-10 w-full">
         <div className="text-6xl md:text-8xl font-extrabold text-center text-indigo-700 drop-shadow-lg">
-          {lhs} {symbol} {rhs} = ?
+          {equationFormat(...operands)}
         </div>
 
         <input
@@ -66,7 +63,6 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
           ref={inputRef}
           onChange={onChange}
           className="w-40 md:w-56 h-20 text-center text-4xl font-bold border-4 border-indigo-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-600 transition"
-          placeholder="?"
         />
 
         <div className="flex items-center justify-center gap-6 text-lg font-bold text-gray-700">
@@ -81,4 +77,4 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
   );
 }
 
-export default MathInput;
+export default MathEquation;

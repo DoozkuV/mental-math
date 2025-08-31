@@ -2,19 +2,19 @@ import { createFileRoute } from '@tanstack/react-router'
 import MathEquation from '@/components/MathEquation'
 import { randInt } from '@/lib/math'
 
-export const Route = createFileRoute('/_game/eleven')({
+export const Route = createFileRoute('/_game/power-of-two')({
   component: FileRoute,
 })
 
 function FileRoute() {
-
   return (
     <MathEquation
-      operandFunc={() => [randInt(10, 99), 11] as const}
-      solutionFunc={(lhs, rhs) => lhs * rhs}
+      operandFunc={() => [randInt(1, 12)] as const}
+      solutionFunc={(lhs) => Math.pow(lhs, 2)}
     >
-      {(lhs, rhs) => `${lhs} x ${rhs}`}
+      {(lhs) => (<span>{lhs}<sup>2</sup></span>)}
     </MathEquation>
+
   );
 }
 

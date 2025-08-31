@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef } from "react";
 import Timer from "@components/Timer";
-import { createPing } from "@lib/animation";
+import { usePing } from "@hooks/usePing";
 
 export interface MathInputProps {
   operandFunc: () => { lhs: number, rhs: number },
@@ -10,11 +10,12 @@ export interface MathInputProps {
 type State = { lhs: number; rhs: number; numSolved: number };
 
 const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
+  const { pings, triggerPing } = usePing();
+
   const reducer = ({ numSolved }: State): State => ({
     numSolved: numSolved + 1,
     ...operandFunc()
   });
-
   const [{ lhs, rhs, numSolved }, dispatch] = useReducer(reducer, {
     numSolved: 0,
     ...operandFunc(),
@@ -30,9 +31,7 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
   const { fn, symbol } = operators[operator];
   const res = fn(lhs, rhs);
 
-  const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
   // Auto-focus input on load
   useEffect(() => inputRef.current?.focus(), []);
 
@@ -42,14 +41,21 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
 
     e.target.value = "";
     dispatch();
-    if (containerRef.current) { createPing(containerRef.current); }
+    triggerPing();
   };
 
   return (
     <div
-      ref={containerRef}
       className="relative flex items-center justify-center w-4/5 md:w-full"
     >
+      {/* Ping Animation */}
+      {pings.map(p => (
+        <div
+          key={p}
+          className="absolute inset-0 rounded-xl bg-green-400/40 animate-ping-once pointer-events-none"
+        />
+      ))}
+      {/* Main Game Screen */}
       <div className="relative z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md shadow-2xl rounded-xl p-10 gap-10 w-full">
         <div className="text-6xl md:text-8xl font-extrabold text-center text-indigo-700 drop-shadow-lg">
           {lhs} {symbol} {rhs} = ?
@@ -71,7 +77,7 @@ const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

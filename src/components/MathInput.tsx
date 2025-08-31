@@ -1,23 +1,45 @@
 import React, { useReducer, useRef } from "react";
 import Timer from "@components/Timer";
-import { randSingleDigit } from "@lib/math";
 import { createPing } from "@/lib/animation";
 
-type State = { lhs: number; rhs: number; numSolved: number };
-const reducer = ({ numSolved }: State): State => ({
-  lhs: randSingleDigit(),
-  rhs: randSingleDigit(),
-  numSolved: numSolved + 1,
-});
+export interface MathInputProps {
+  lhs: number | (() => number);
+  rhs: number | (() => number);
+  operator: "add" | "subtract" | "multiply";
+}
 
-function MathInput() {
+type State = { lhs: number; rhs: number; numSolved: number };
+
+const MathInput: React.FC<MathInputProps> = ({ lhs: lhsInit, rhs: rhsInit, operator }) => {
+  const reducer = ({ numSolved }: State): State => ({
+    lhs: typeof lhsInit == "function" ? lhsInit() : lhsInit,
+    rhs: typeof rhsInit == "function" ? rhsInit() : rhsInit,
+    numSolved: numSolved + 1,
+  });
+
   const [{ lhs, rhs, numSolved }, dispatch] = useReducer(reducer, {
-    lhs: randSingleDigit(),
-    rhs: randSingleDigit(),
+    lhs: typeof lhsInit == "function" ? lhsInit() : lhsInit,
+    rhs: typeof rhsInit == "function" ? rhsInit() : rhsInit,
     numSolved: 0,
   });
 
-  const sum = lhs + rhs;
+  let sum: number;
+  let symbol: string;
+  switch (operator) {
+    case "add":
+      sum = lhs + rhs
+      symbol = "+";
+      break;
+    case "subtract":
+      sum = lhs - rhs
+      symbol = "-";
+      break;
+    case "multiply":
+      sum = lhs * rhs
+      symbol = "x";
+      break;
+  }
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +58,7 @@ function MathInput() {
     >
       <div className="relative z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md shadow-2xl rounded-xl p-10 gap-10 w-full">
         <div className="text-6xl md:text-8xl font-extrabold text-center text-indigo-700 drop-shadow-lg">
-          {lhs} + {rhs} = ?
+          {lhs} {symbol} {rhs} = ?
         </div>
 
         <input

@@ -1,4 +1,4 @@
-import MathInput from './components/MathInput'
+import MathInput from '../components/MathInput'
 import './app.css';
 
 function App() {

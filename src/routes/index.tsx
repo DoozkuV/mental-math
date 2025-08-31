@@ -25,7 +25,7 @@ function RouteComponent() {
 
           <Link
             to="/multiplication"
-            className="w-full text-center py-4 text-xl font-bold text-white bg-green-600 rounded-lg shadow-md hover:bg-indigo-700 transition"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 transition"
           >
             ✖️ Times Table Practice
           </Link>

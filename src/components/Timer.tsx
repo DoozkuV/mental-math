@@ -8,7 +8,11 @@ function Timer() {
     return () => clearInterval(id);
   });
 
-  return <div>Elapsed Time: {seconds}</div>;
+  return (
+    <div className="text-lg font-bold text-gray-700">
+      ⏱ <span className="text-indigo-600">{seconds}s</span>
+    </div>
+  );
 }
 
 export default Timer;

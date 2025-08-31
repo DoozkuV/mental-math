@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useState } from "react";
 import Timer from "@components/Timer";
 import { usePing } from "@hooks/usePing";
 
@@ -8,23 +8,14 @@ export interface MathEquationProps<T extends number[]> {
   children: (...operands: T) => React.ReactNode;
 }
 
-type State<T extends number[]> = { operands: T; numSolved: number };
-
 function MathEquation<T extends number[]>({
   operandFunc,
   solutionFunc,
   children: equationFormat
 }: MathEquationProps<T>) {
   const { pings, triggerPing } = usePing();
-
-  const reducer = ({ numSolved }: State<T>): State<T> => ({
-    numSolved: numSolved + 1,
-    operands: operandFunc()
-  });
-  const [{ operands, numSolved }, dispatch] = useReducer(reducer, {
-    numSolved: 0,
-    operands: operandFunc(),
-  });
+  const [operands, setOperands] = useState(() => operandFunc());
+  const [numSolved, setNumSolved] = useState(0);
 
   const solution = solutionFunc(...operands);
 
@@ -33,7 +24,8 @@ function MathEquation<T extends number[]>({
     if (val !== solution) return;
 
     e.target.value = "";
-    dispatch();
+    setOperands(operandFunc());
+    setNumSolved((n) => n + 1);
     triggerPing();
   };
 
@@ -62,6 +54,7 @@ function MathEquation<T extends number[]>({
         />
 
         <div className="flex items-center justify-center gap-6 text-lg font-bold text-gray-700">
+          {/* Use numSolved to re-render timer on success */}
           <Timer key={numSolved} />
           <div className="flex items-center gap-2">
             <span className="text-yellow-500">🏆</span>
@@ -69,7 +62,7 @@ function MathEquation<T extends number[]>({
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

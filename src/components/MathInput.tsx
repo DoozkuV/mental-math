@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import Timer from "@components/Timer";
 import { createPing } from "@/lib/animation";
 
@@ -41,6 +41,10 @@ const MathInput: React.FC<MathInputProps> = ({ lhs: lhsInit, rhs: rhsInit, opera
   }
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-focus input on load
+  useEffect(() => inputRef.current?.focus(), []);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value);
@@ -54,7 +58,7 @@ const MathInput: React.FC<MathInputProps> = ({ lhs: lhsInit, rhs: rhsInit, opera
   return (
     <div
       ref={containerRef}
-      className="relative flex items-center justify-center w-4/5 md:w-1/2"
+      className="relative flex items-center justify-center w-4/5 md:w-full"
     >
       <div className="relative z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-md shadow-2xl rounded-xl p-10 gap-10 w-full">
         <div className="text-6xl md:text-8xl font-extrabold text-center text-indigo-700 drop-shadow-lg">
@@ -63,6 +67,7 @@ const MathInput: React.FC<MathInputProps> = ({ lhs: lhsInit, rhs: rhsInit, opera
 
         <input
           type="number"
+          ref={inputRef}
           onChange={onChange}
           className="w-40 md:w-56 h-20 text-center text-4xl font-bold border-4 border-indigo-500 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-600 transition"
           placeholder="?"

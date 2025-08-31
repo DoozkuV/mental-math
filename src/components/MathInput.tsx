@@ -1,21 +1,29 @@
-import React, { useState } from "react"
+import React, { useReducer } from "react"
 import { randSingleDigit } from "@lib/math";
 import Timer from "@components/Timer";
 
+type State = { lhs: number; rhs: number; resetKey: number; };
+const reducer = ({ resetKey }: State): State => ({
+  lhs: randSingleDigit(),
+  rhs: randSingleDigit(),
+  resetKey: resetKey + 1
+})
+
 function MathInput() {
-  const [lhs, setLhs] = useState(randSingleDigit());
-  const [rhs, setRhs] = useState(randSingleDigit());
-  const [resetKey, setResetKey] = useState(0);
+  const [{ lhs, rhs, resetKey }, dispatch] = useReducer(reducer, {
+    lhs: randSingleDigit(),
+    rhs: randSingleDigit(),
+    resetKey: 0,
+  });
 
   const sum = lhs + rhs;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value);
-    if (val == sum) {
-      e.target.value = "";
-      [setLhs, setRhs].forEach(f => f(randSingleDigit()));
-      setResetKey(k => k + 1);
-    }
+    if (val != sum) return;
+
+    e.target.value = "";
+    dispatch();
   }
 
   return (

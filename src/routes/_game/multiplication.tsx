@@ -7,9 +7,10 @@ export const Route = createFileRoute('/_game/multiplication')({
 })
 
 function FileRoute() {
-  return (
-    <MathInput lhs={() => randInt(1, 12)} rhs={() => randInt(1, 12)} operator='multiply' />
-  )
+  const operandFunc = () =>
+    ({ lhs: randInt(1, 12), rhs: randInt(1, 12) });
+
+  return <MathInput operandFunc={operandFunc} operator='multiply' />;
 }
 
 export default FileRoute

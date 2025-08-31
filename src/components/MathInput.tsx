@@ -1,44 +1,34 @@
 import React, { useEffect, useReducer, useRef } from "react";
 import Timer from "@components/Timer";
-import { createPing } from "@/lib/animation";
+import { createPing } from "@lib/animation";
 
 export interface MathInputProps {
-  lhs: number | (() => number);
-  rhs: number | (() => number);
-  operator: "add" | "subtract" | "multiply";
+  operandFunc: () => { lhs: number, rhs: number },
+  operator: "add" | "subtract" | "multiply" | "divide";
 }
 
 type State = { lhs: number; rhs: number; numSolved: number };
 
-const MathInput: React.FC<MathInputProps> = ({ lhs: lhsInit, rhs: rhsInit, operator }) => {
+const MathInput: React.FC<MathInputProps> = ({ operandFunc, operator }) => {
   const reducer = ({ numSolved }: State): State => ({
-    lhs: typeof lhsInit == "function" ? lhsInit() : lhsInit,
-    rhs: typeof rhsInit == "function" ? rhsInit() : rhsInit,
     numSolved: numSolved + 1,
+    ...operandFunc()
   });
 
   const [{ lhs, rhs, numSolved }, dispatch] = useReducer(reducer, {
-    lhs: typeof lhsInit == "function" ? lhsInit() : lhsInit,
-    rhs: typeof rhsInit == "function" ? rhsInit() : rhsInit,
     numSolved: 0,
+    ...operandFunc(),
   });
 
-  let sum: number;
-  let symbol: string;
-  switch (operator) {
-    case "add":
-      sum = lhs + rhs
-      symbol = "+";
-      break;
-    case "subtract":
-      sum = lhs - rhs
-      symbol = "-";
-      break;
-    case "multiply":
-      sum = lhs * rhs
-      symbol = "x";
-      break;
-  }
+  const operators = {
+    add: { fn: (a: number, b: number) => a + b, symbol: '+' },
+    subtract: { fn: (a: number, b: number) => a - b, symbol: '-' },
+    multiply: { fn: (a: number, b: number) => a * b, symbol: 'x' },
+    divide: { fn: (a: number, b: number) => a / b, symbol: '÷' },
+  };
+
+  const { fn, symbol } = operators[operator];
+  const res = fn(lhs, rhs);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -48,7 +38,7 @@ const MathInput: React.FC<MathInputProps> = ({ lhs: lhsInit, rhs: rhsInit, opera
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value);
-    if (val !== sum) return;
+    if (val !== res) return;
 
     e.target.value = "";
     dispatch();

@@ -7,9 +7,10 @@ export const Route = createFileRoute('/_game/addition')({
 })
 
 function FileRoute() {
-  return (
-    <MathInput lhs={() => randSingleDigit()} rhs={() => randSingleDigit()} operator='add' />
-  )
+  const operandFunc = () =>
+    ({ lhs: randSingleDigit(), rhs: randSingleDigit() });
+
+  return <MathInput operandFunc={operandFunc} operator='add' />;
 }
 
 export default FileRoute

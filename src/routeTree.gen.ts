@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as GameRouteRouteImport } from './routes/_game/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GameSubtractionRouteImport } from './routes/_game/subtraction'
 import { Route as GameMultiplicationRouteImport } from './routes/_game/multiplication'
 import { Route as GameElevenRouteImport } from './routes/_game/eleven'
 import { Route as GameAdditionRouteImport } from './routes/_game/addition'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const GameSubtractionRoute = GameSubtractionRouteImport.update({
+  id: '/subtraction',
+  path: '/subtraction',
+  getParentRoute: () => GameRouteRoute,
 } as any)
 const GameMultiplicationRoute = GameMultiplicationRouteImport.update({
   id: '/multiplication',
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/addition': typeof GameAdditionRoute
   '/eleven': typeof GameElevenRoute
   '/multiplication': typeof GameMultiplicationRoute
+  '/subtraction': typeof GameSubtractionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/addition': typeof GameAdditionRoute
   '/eleven': typeof GameElevenRoute
   '/multiplication': typeof GameMultiplicationRoute
+  '/subtraction': typeof GameSubtractionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +67,13 @@ export interface FileRoutesById {
   '/_game/addition': typeof GameAdditionRoute
   '/_game/eleven': typeof GameElevenRoute
   '/_game/multiplication': typeof GameMultiplicationRoute
+  '/_game/subtraction': typeof GameSubtractionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/addition' | '/eleven' | '/multiplication'
+  fullPaths: '/' | '/addition' | '/eleven' | '/multiplication' | '/subtraction'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/addition' | '/eleven' | '/multiplication'
+  to: '/' | '/addition' | '/eleven' | '/multiplication' | '/subtraction'
   id:
     | '__root__'
     | '/'
@@ -72,6 +81,7 @@ export interface FileRouteTypes {
     | '/_game/addition'
     | '/_game/eleven'
     | '/_game/multiplication'
+    | '/_game/subtraction'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,6 +104,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_game/subtraction': {
+      id: '/_game/subtraction'
+      path: '/subtraction'
+      fullPath: '/subtraction'
+      preLoaderRoute: typeof GameSubtractionRouteImport
+      parentRoute: typeof GameRouteRoute
     }
     '/_game/multiplication': {
       id: '/_game/multiplication'
@@ -123,12 +140,14 @@ interface GameRouteRouteChildren {
   GameAdditionRoute: typeof GameAdditionRoute
   GameElevenRoute: typeof GameElevenRoute
   GameMultiplicationRoute: typeof GameMultiplicationRoute
+  GameSubtractionRoute: typeof GameSubtractionRoute
 }
 
 const GameRouteRouteChildren: GameRouteRouteChildren = {
   GameAdditionRoute: GameAdditionRoute,
   GameElevenRoute: GameElevenRoute,
   GameMultiplicationRoute: GameMultiplicationRoute,
+  GameSubtractionRoute: GameSubtractionRoute,
 }
 
 const GameRouteRouteWithChildren = GameRouteRoute._addFileChildren(

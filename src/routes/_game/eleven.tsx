@@ -3,13 +3,14 @@ import MathInput from '@components/MathInput'
 import { randInt } from '@/lib/math'
 
 export const Route = createFileRoute('/_game/eleven')({
-  component: App,
+  component: FileRoute,
 })
 
-function App() {
-  return (
-    <MathInput lhs={() => randInt(10, 99)} rhs={11} operator='multiply' />
-  )
+function FileRoute() {
+  const operandFunc = () =>
+    ({ lhs: randInt(10, 99), rhs: 11 });
+
+  return <MathInput operandFunc={operandFunc} operator='multiply' />;
 }
 
-export default App
+export default FileRoute

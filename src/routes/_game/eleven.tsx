@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import MathInput from '../../components/MathInput'
+import MathInput from '@components/MathInput'
 import { randInt } from '@/lib/math'
 
 export const Route = createFileRoute('/_game/eleven')({

@@ -55,7 +55,7 @@ function MathEquation<T extends number[]>({
 
         <div className="flex items-center justify-center gap-6 text-lg font-bold text-gray-700">
           {/* Use numSolved to re-render timer on success */}
-          <Timer key={numSolved} />
+          <Timer resetSignal={numSolved} />
           <div className="flex items-center gap-2">
             <span className="text-yellow-500">🏆</span>
             <span className="text-indigo-700">{numSolved}</span>

@@ -17,10 +17,17 @@ function RouteComponent() {
 
         <div className="flex flex-col gap-4 w-full">
           <Link
-            to="/addition"
+            to="/one-digit-addition"
             className="w-full text-center py-4 text-xl font-bold text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition"
           >
-            ➕ Addition
+            ➕ One Digit Addition
+          </Link>
+
+          <Link
+            to="/two-digit-addition"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition"
+          >
+            ➕ Two Digit Addition
           </Link>
 
           <Link

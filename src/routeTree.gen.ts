@@ -11,11 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as GameRouteRouteImport } from './routes/_game/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GameTwoDigitAdditionRouteImport } from './routes/_game/two-digit-addition'
 import { Route as GameSubtractionRouteImport } from './routes/_game/subtraction'
 import { Route as GamePowerOfTwoRouteImport } from './routes/_game/power-of-two'
+import { Route as GameOneDigitAdditionRouteImport } from './routes/_game/one-digit-addition'
 import { Route as GameMultiplicationRouteImport } from './routes/_game/multiplication'
 import { Route as GameElevenRouteImport } from './routes/_game/eleven'
-import { Route as GameAdditionRouteImport } from './routes/_game/addition'
 
 const GameRouteRoute = GameRouteRouteImport.update({
   id: '/_game',
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GameTwoDigitAdditionRoute = GameTwoDigitAdditionRouteImport.update({
+  id: '/two-digit-addition',
+  path: '/two-digit-addition',
+  getParentRoute: () => GameRouteRoute,
+} as any)
 const GameSubtractionRoute = GameSubtractionRouteImport.update({
   id: '/subtraction',
   path: '/subtraction',
@@ -34,6 +40,11 @@ const GameSubtractionRoute = GameSubtractionRouteImport.update({
 const GamePowerOfTwoRoute = GamePowerOfTwoRouteImport.update({
   id: '/power-of-two',
   path: '/power-of-two',
+  getParentRoute: () => GameRouteRoute,
+} as any)
+const GameOneDigitAdditionRoute = GameOneDigitAdditionRouteImport.update({
+  id: '/one-digit-addition',
+  path: '/one-digit-addition',
   getParentRoute: () => GameRouteRoute,
 } as any)
 const GameMultiplicationRoute = GameMultiplicationRouteImport.update({
@@ -46,64 +57,65 @@ const GameElevenRoute = GameElevenRouteImport.update({
   path: '/eleven',
   getParentRoute: () => GameRouteRoute,
 } as any)
-const GameAdditionRoute = GameAdditionRouteImport.update({
-  id: '/addition',
-  path: '/addition',
-  getParentRoute: () => GameRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/addition': typeof GameAdditionRoute
   '/eleven': typeof GameElevenRoute
   '/multiplication': typeof GameMultiplicationRoute
+  '/one-digit-addition': typeof GameOneDigitAdditionRoute
   '/power-of-two': typeof GamePowerOfTwoRoute
   '/subtraction': typeof GameSubtractionRoute
+  '/two-digit-addition': typeof GameTwoDigitAdditionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/addition': typeof GameAdditionRoute
   '/eleven': typeof GameElevenRoute
   '/multiplication': typeof GameMultiplicationRoute
+  '/one-digit-addition': typeof GameOneDigitAdditionRoute
   '/power-of-two': typeof GamePowerOfTwoRoute
   '/subtraction': typeof GameSubtractionRoute
+  '/two-digit-addition': typeof GameTwoDigitAdditionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_game': typeof GameRouteRouteWithChildren
-  '/_game/addition': typeof GameAdditionRoute
   '/_game/eleven': typeof GameElevenRoute
   '/_game/multiplication': typeof GameMultiplicationRoute
+  '/_game/one-digit-addition': typeof GameOneDigitAdditionRoute
   '/_game/power-of-two': typeof GamePowerOfTwoRoute
   '/_game/subtraction': typeof GameSubtractionRoute
+  '/_game/two-digit-addition': typeof GameTwoDigitAdditionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/addition'
     | '/eleven'
     | '/multiplication'
+    | '/one-digit-addition'
     | '/power-of-two'
     | '/subtraction'
+    | '/two-digit-addition'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/addition'
     | '/eleven'
     | '/multiplication'
+    | '/one-digit-addition'
     | '/power-of-two'
     | '/subtraction'
+    | '/two-digit-addition'
   id:
     | '__root__'
     | '/'
     | '/_game'
-    | '/_game/addition'
     | '/_game/eleven'
     | '/_game/multiplication'
+    | '/_game/one-digit-addition'
     | '/_game/power-of-two'
     | '/_game/subtraction'
+    | '/_game/two-digit-addition'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -127,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_game/two-digit-addition': {
+      id: '/_game/two-digit-addition'
+      path: '/two-digit-addition'
+      fullPath: '/two-digit-addition'
+      preLoaderRoute: typeof GameTwoDigitAdditionRouteImport
+      parentRoute: typeof GameRouteRoute
+    }
     '/_game/subtraction': {
       id: '/_game/subtraction'
       path: '/subtraction'
@@ -139,6 +158,13 @@ declare module '@tanstack/react-router' {
       path: '/power-of-two'
       fullPath: '/power-of-two'
       preLoaderRoute: typeof GamePowerOfTwoRouteImport
+      parentRoute: typeof GameRouteRoute
+    }
+    '/_game/one-digit-addition': {
+      id: '/_game/one-digit-addition'
+      path: '/one-digit-addition'
+      fullPath: '/one-digit-addition'
+      preLoaderRoute: typeof GameOneDigitAdditionRouteImport
       parentRoute: typeof GameRouteRoute
     }
     '/_game/multiplication': {
@@ -155,30 +181,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameElevenRouteImport
       parentRoute: typeof GameRouteRoute
     }
-    '/_game/addition': {
-      id: '/_game/addition'
-      path: '/addition'
-      fullPath: '/addition'
-      preLoaderRoute: typeof GameAdditionRouteImport
-      parentRoute: typeof GameRouteRoute
-    }
   }
 }
 
 interface GameRouteRouteChildren {
-  GameAdditionRoute: typeof GameAdditionRoute
   GameElevenRoute: typeof GameElevenRoute
   GameMultiplicationRoute: typeof GameMultiplicationRoute
+  GameOneDigitAdditionRoute: typeof GameOneDigitAdditionRoute
   GamePowerOfTwoRoute: typeof GamePowerOfTwoRoute
   GameSubtractionRoute: typeof GameSubtractionRoute
+  GameTwoDigitAdditionRoute: typeof GameTwoDigitAdditionRoute
 }
 
 const GameRouteRouteChildren: GameRouteRouteChildren = {
-  GameAdditionRoute: GameAdditionRoute,
   GameElevenRoute: GameElevenRoute,
   GameMultiplicationRoute: GameMultiplicationRoute,
+  GameOneDigitAdditionRoute: GameOneDigitAdditionRoute,
   GamePowerOfTwoRoute: GamePowerOfTwoRoute,
   GameSubtractionRoute: GameSubtractionRoute,
+  GameTwoDigitAdditionRoute: GameTwoDigitAdditionRoute,
 }
 
 const GameRouteRouteWithChildren = GameRouteRoute._addFileChildren(

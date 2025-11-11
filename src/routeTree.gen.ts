@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as GameRouteRouteImport } from './routes/_game/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GameTwoDigitSubtractionRouteImport } from './routes/_game/two-digit-subtraction'
+import { Route as GameTwoDigitComplimentsRouteImport } from './routes/_game/two-digit-compliments'
 import { Route as GameTwoDigitAdditionRouteImport } from './routes/_game/two-digit-addition'
 import { Route as GamePowerOfTwoRouteImport } from './routes/_game/power-of-two'
 import { Route as GameOneDigitSubtractionRouteImport } from './routes/_game/one-digit-subtraction'
@@ -31,6 +32,11 @@ const IndexRoute = IndexRouteImport.update({
 const GameTwoDigitSubtractionRoute = GameTwoDigitSubtractionRouteImport.update({
   id: '/two-digit-subtraction',
   path: '/two-digit-subtraction',
+  getParentRoute: () => GameRouteRoute,
+} as any)
+const GameTwoDigitComplimentsRoute = GameTwoDigitComplimentsRouteImport.update({
+  id: '/two-digit-compliments',
+  path: '/two-digit-compliments',
   getParentRoute: () => GameRouteRoute,
 } as any)
 const GameTwoDigitAdditionRoute = GameTwoDigitAdditionRouteImport.update({
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/one-digit-subtraction': typeof GameOneDigitSubtractionRoute
   '/power-of-two': typeof GamePowerOfTwoRoute
   '/two-digit-addition': typeof GameTwoDigitAdditionRoute
+  '/two-digit-compliments': typeof GameTwoDigitComplimentsRoute
   '/two-digit-subtraction': typeof GameTwoDigitSubtractionRoute
 }
 export interface FileRoutesByTo {
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/one-digit-subtraction': typeof GameOneDigitSubtractionRoute
   '/power-of-two': typeof GamePowerOfTwoRoute
   '/two-digit-addition': typeof GameTwoDigitAdditionRoute
+  '/two-digit-compliments': typeof GameTwoDigitComplimentsRoute
   '/two-digit-subtraction': typeof GameTwoDigitSubtractionRoute
 }
 export interface FileRoutesById {
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/_game/one-digit-subtraction': typeof GameOneDigitSubtractionRoute
   '/_game/power-of-two': typeof GamePowerOfTwoRoute
   '/_game/two-digit-addition': typeof GameTwoDigitAdditionRoute
+  '/_game/two-digit-compliments': typeof GameTwoDigitComplimentsRoute
   '/_game/two-digit-subtraction': typeof GameTwoDigitSubtractionRoute
 }
 export interface FileRouteTypes {
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/one-digit-subtraction'
     | '/power-of-two'
     | '/two-digit-addition'
+    | '/two-digit-compliments'
     | '/two-digit-subtraction'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/one-digit-subtraction'
     | '/power-of-two'
     | '/two-digit-addition'
+    | '/two-digit-compliments'
     | '/two-digit-subtraction'
   id:
     | '__root__'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/_game/one-digit-subtraction'
     | '/_game/power-of-two'
     | '/_game/two-digit-addition'
+    | '/_game/two-digit-compliments'
     | '/_game/two-digit-subtraction'
   fileRoutesById: FileRoutesById
 }
@@ -156,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/two-digit-subtraction'
       fullPath: '/two-digit-subtraction'
       preLoaderRoute: typeof GameTwoDigitSubtractionRouteImport
+      parentRoute: typeof GameRouteRoute
+    }
+    '/_game/two-digit-compliments': {
+      id: '/_game/two-digit-compliments'
+      path: '/two-digit-compliments'
+      fullPath: '/two-digit-compliments'
+      preLoaderRoute: typeof GameTwoDigitComplimentsRouteImport
       parentRoute: typeof GameRouteRoute
     }
     '/_game/two-digit-addition': {
@@ -210,6 +229,7 @@ interface GameRouteRouteChildren {
   GameOneDigitSubtractionRoute: typeof GameOneDigitSubtractionRoute
   GamePowerOfTwoRoute: typeof GamePowerOfTwoRoute
   GameTwoDigitAdditionRoute: typeof GameTwoDigitAdditionRoute
+  GameTwoDigitComplimentsRoute: typeof GameTwoDigitComplimentsRoute
   GameTwoDigitSubtractionRoute: typeof GameTwoDigitSubtractionRoute
 }
 
@@ -220,6 +240,7 @@ const GameRouteRouteChildren: GameRouteRouteChildren = {
   GameOneDigitSubtractionRoute: GameOneDigitSubtractionRoute,
   GamePowerOfTwoRoute: GamePowerOfTwoRoute,
   GameTwoDigitAdditionRoute: GameTwoDigitAdditionRoute,
+  GameTwoDigitComplimentsRoute: GameTwoDigitComplimentsRoute,
   GameTwoDigitSubtractionRoute: GameTwoDigitSubtractionRoute,
 }
 

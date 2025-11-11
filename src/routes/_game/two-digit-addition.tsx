@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import MathEquation from '@/components/MathEquation'
-import { randInt } from '@/lib/math'
+import { additionGenerator } from '@/lib/operands';
 
 export const Route = createFileRoute('/_game/two-digit-addition')({
   component: FileRoute,
@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_game/two-digit-addition')({
 function FileRoute() {
   return (
     <MathEquation
-      operandFunc={() => [randInt(10, 99), randInt(10, 99)] as const}
+      operandFunc={additionGenerator(99)}
       solutionFunc={(lhs, rhs) => lhs + rhs}
     >
       {(lhs, rhs) => `${lhs} + ${rhs}`}

@@ -31,10 +31,17 @@ function RouteComponent() {
           </Link>
 
           <Link
-            to="/subtraction"
+            to="/one-digit-subtraction"
             className="w-full text-center py-4 text-xl font-bold text-white bg-pink-500 rounded-lg shadow-md hover:bg-pink-600 transition"
           >
             ➖ Subtraction
+          </Link>
+
+          <Link
+            to="/two-digit-subtraction"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-pink-500 rounded-lg shadow-md hover:bg-pink-600 transition"
+          >
+            ➖ Two Digit Subtraction
           </Link>
 
           <Link

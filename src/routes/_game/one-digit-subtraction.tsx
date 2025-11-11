@@ -1,21 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import MathEquation from '@/components/MathEquation'
-import { randInt } from '@/lib/math'
+import { subtractionGenerator } from '@/lib/operands'
 
-export const Route = createFileRoute('/_game/subtraction')({
+export const Route = createFileRoute('/_game/one-digit-subtraction')({
   component: FileRoute,
 })
 
 function FileRoute() {
-  const operandFunc = () => {
-    const n1 = randInt(1, 9);
-    const n2 = randInt(1, 9);
-    return [Math.max(n1, n2), Math.min(n1, n2)] satisfies [number, number];
-  }
-
   return (
     <MathEquation
-      operandFunc={operandFunc}
+      operandFunc={subtractionGenerator(9)}
       solutionFunc={(lhs, rhs) => lhs - rhs}
     >
       {(lhs, rhs) => `${lhs} - ${rhs}`}

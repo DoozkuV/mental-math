@@ -29,7 +29,12 @@ function RouteComponent() {
           >
             ➕ Two Digit Addition
           </Link>
-
+          <Link
+            to="/three-digit-addition"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 transition"
+          >
+            ➕ Three Digit Addition
+          </Link>
           <Link
             to="/one-digit-subtraction"
             className="w-full text-center py-4 text-xl font-bold text-white bg-pink-500 rounded-lg shadow-md hover:bg-pink-600 transition"
@@ -43,7 +48,12 @@ function RouteComponent() {
           >
             ➖ Two Digit Subtraction
           </Link>
-
+          <Link
+            to="/three-digit-subtraction"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-pink-500 rounded-lg shadow-md hover:bg-pink-600 transition"
+          >
+            ➖ Three Digit Subtraction
+          </Link>
           <Link
             to="/multiplication"
             className="w-full text-center py-4 text-xl font-bold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 transition"

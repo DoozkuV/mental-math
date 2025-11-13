@@ -12,7 +12,7 @@ function RouteComponent() {
       operandFunc={() => [randInt(1, 99)] satisfies [number]}
       solutionFunc={(num) => 100 - num}
     >
-      {(num) => `${num}`}
+      {(num) => `${num}`.padStart(2, '0')}
     </MathEquation>
   );
 }

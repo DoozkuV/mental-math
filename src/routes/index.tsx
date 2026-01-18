@@ -80,6 +80,18 @@ function RouteComponent() {
           >
             ✨ Double Digits Times 11
           </Link>
+          <Link
+            to="/binary-four-digits"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 transition"
+          >
+            🖥️ Binary Four Digits
+          </Link>
+          <Link
+            to="/binary-eight-digits"
+            className="w-full text-center py-4 text-xl font-bold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 transition"
+          >
+            🖥️ Binary Eight Digits
+          </Link>
         </div>
       </div>
     </div>

@@ -21,6 +21,8 @@ import { Route as GameOneDigitSubtractionRouteImport } from './routes/_game/one-
 import { Route as GameOneDigitAdditionRouteImport } from './routes/_game/one-digit-addition'
 import { Route as GameMultiplicationRouteImport } from './routes/_game/multiplication'
 import { Route as GameElevenRouteImport } from './routes/_game/eleven'
+import { Route as GameBinaryFourDigitsRouteImport } from './routes/_game/binary-four-digits'
+import { Route as GameBinaryEightDigitsRouteImport } from './routes/_game/binary-eight-digits'
 
 const GameRouteRoute = GameRouteRouteImport.update({
   id: '/_game',
@@ -82,9 +84,21 @@ const GameElevenRoute = GameElevenRouteImport.update({
   path: '/eleven',
   getParentRoute: () => GameRouteRoute,
 } as any)
+const GameBinaryFourDigitsRoute = GameBinaryFourDigitsRouteImport.update({
+  id: '/binary-four-digits',
+  path: '/binary-four-digits',
+  getParentRoute: () => GameRouteRoute,
+} as any)
+const GameBinaryEightDigitsRoute = GameBinaryEightDigitsRouteImport.update({
+  id: '/binary-eight-digits',
+  path: '/binary-eight-digits',
+  getParentRoute: () => GameRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/binary-eight-digits': typeof GameBinaryEightDigitsRoute
+  '/binary-four-digits': typeof GameBinaryFourDigitsRoute
   '/eleven': typeof GameElevenRoute
   '/multiplication': typeof GameMultiplicationRoute
   '/one-digit-addition': typeof GameOneDigitAdditionRoute
@@ -98,6 +112,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/binary-eight-digits': typeof GameBinaryEightDigitsRoute
+  '/binary-four-digits': typeof GameBinaryFourDigitsRoute
   '/eleven': typeof GameElevenRoute
   '/multiplication': typeof GameMultiplicationRoute
   '/one-digit-addition': typeof GameOneDigitAdditionRoute
@@ -113,6 +129,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_game': typeof GameRouteRouteWithChildren
+  '/_game/binary-eight-digits': typeof GameBinaryEightDigitsRoute
+  '/_game/binary-four-digits': typeof GameBinaryFourDigitsRoute
   '/_game/eleven': typeof GameElevenRoute
   '/_game/multiplication': typeof GameMultiplicationRoute
   '/_game/one-digit-addition': typeof GameOneDigitAdditionRoute
@@ -128,6 +146,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/binary-eight-digits'
+    | '/binary-four-digits'
     | '/eleven'
     | '/multiplication'
     | '/one-digit-addition'
@@ -141,6 +161,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/binary-eight-digits'
+    | '/binary-four-digits'
     | '/eleven'
     | '/multiplication'
     | '/one-digit-addition'
@@ -155,6 +177,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_game'
+    | '/_game/binary-eight-digits'
+    | '/_game/binary-four-digits'
     | '/_game/eleven'
     | '/_game/multiplication'
     | '/_game/one-digit-addition'
@@ -258,10 +282,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameElevenRouteImport
       parentRoute: typeof GameRouteRoute
     }
+    '/_game/binary-four-digits': {
+      id: '/_game/binary-four-digits'
+      path: '/binary-four-digits'
+      fullPath: '/binary-four-digits'
+      preLoaderRoute: typeof GameBinaryFourDigitsRouteImport
+      parentRoute: typeof GameRouteRoute
+    }
+    '/_game/binary-eight-digits': {
+      id: '/_game/binary-eight-digits'
+      path: '/binary-eight-digits'
+      fullPath: '/binary-eight-digits'
+      preLoaderRoute: typeof GameBinaryEightDigitsRouteImport
+      parentRoute: typeof GameRouteRoute
+    }
   }
 }
 
 interface GameRouteRouteChildren {
+  GameBinaryEightDigitsRoute: typeof GameBinaryEightDigitsRoute
+  GameBinaryFourDigitsRoute: typeof GameBinaryFourDigitsRoute
   GameElevenRoute: typeof GameElevenRoute
   GameMultiplicationRoute: typeof GameMultiplicationRoute
   GameOneDigitAdditionRoute: typeof GameOneDigitAdditionRoute
@@ -275,6 +315,8 @@ interface GameRouteRouteChildren {
 }
 
 const GameRouteRouteChildren: GameRouteRouteChildren = {
+  GameBinaryEightDigitsRoute: GameBinaryEightDigitsRoute,
+  GameBinaryFourDigitsRoute: GameBinaryFourDigitsRoute,
   GameElevenRoute: GameElevenRoute,
   GameMultiplicationRoute: GameMultiplicationRoute,
   GameOneDigitAdditionRoute: GameOneDigitAdditionRoute,
